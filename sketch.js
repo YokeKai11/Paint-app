@@ -628,7 +628,7 @@ function draw() {
   fill(0)
   strokeWeight(0)
   textSize(20)
-  text("Pen modes", 1200, 20)
+  text("Pen modes", 1140, 20)
   textSize(16)
   noFill()
   
