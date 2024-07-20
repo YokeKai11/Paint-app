@@ -6,11 +6,12 @@ let thickness = 10,
     usingcp,
     a = 255, 
     bgcolor = "white",
-    fixedRandC
+    fixedRandC,
+    inst =1
     
 
 function setup() {
-  canvas = createCanvas(windowWidth+900, windowHeight);
+  canvas = createCanvas(windowWidth, windowHeight);
   cpicker = createColorPicker();
   cpicker.position(560, 35)
   cpicker.size(30, 30)
@@ -42,13 +43,16 @@ function setup() {
     thicknessInput.value(thickness);
   });
   
-  textFont("Oleo Script")
+  textFont("Crimson Text")
 }
 
 
 
 function draw() {
-
+  textStyle(BOLD)
+  textFont("Crimson Text")
+  textAlign(CENTER)
+  
   if (bgcolor != bgcp.value()) {
     bgcolor = bgcp.value();
     background(bgcolor);
@@ -102,7 +106,7 @@ function draw() {
   
   
   //modes
-  if (mouseY > 100) {
+  if (mouseY > 100 && inst == 0) {
     if(mouseIsPressed && mode == 0){
       fill(c)
       strokeWeight(0)
@@ -620,8 +624,13 @@ function draw() {
   textSize(25)
   text("🖌️", 1293, 57)
   
+
+  fill(0)
+  strokeWeight(0)
+  textSize(20)
+  text("Pen modes", 1000, 20)
   textSize(16)
-  
+  noFill()
   
   strokeWeight(0)
   if (mode == 0){
@@ -634,7 +643,7 @@ function draw() {
   }
   else if (mode == 1){
     strokeWeight(3)
-    fill(255)
+    noFill()
     rect(1050, 30, 40)
     line(1055, 35, 1085, 65)
     fill(0)
@@ -669,9 +678,82 @@ function draw() {
     text("Brush", 1293, 90)
   }
   
+  
+  //Instructions
+  textFont("Arial")
+  noFill()
+  strokeWeight(2)
+  if(dist(mouseX, mouseY, 1620, 27) < 25){
+    textFont("Crimson Text")
+    noStroke()
+    fill(0)
+    text("Instructions", 1620, 70)
+    textFont("Arial")
+    stroke(0)
+    strokeWeight(4)
+    noFill()
+    
+  }
+  circle(1620, 27, 50)
+  fill(0)
+  noStroke()
+  textSize(40)
+  text("?", 1620, 41)
+
+  
+  if(inst == 1){
+    fill(bgcolor)
+    rect(0, 100, width, height-100)
+    fill(255)
+    strokeWeight(5)
+    stroke(0)
+    rect(width/2-500, 150, 1000, 550, 30)
+    fill(0)
+    strokeWeight(2)
+    textSize(50)
+    text("Instructions", width/2, 200)
+    textSize(30)
+    strokeWeight(1)
+    text("Things to note", width/2, 450)
+    textSize(20)
+    textAlign(LEFT)
+    text("1. Press down your mouse and drag to draw\n\n2. Choose a colour by clicking on its corrseponding circle\n\n3. Choose your pen mode by clicking on the shapes\n\n4. To reopen this tab, click on the question mark ",width/2-500+30, 240)
+    text("-If there are some elements missing on your screen, zoom out until they can all be seen.\n\n-Your drawing will be deleted when this screen is opened again.\n\n-When you are using the colour picker, click it again after you have chosen your colour.", width/2-500+30, 500)
+    strokeWeight(5)
+    line(width/2+200, 150, width/2+200, 470)
+    line(width/2+200, 470, width/2+500, 470)
+    strokeWeight(0.5)
+    textSize(25)
+    text("Keyboard shortcuts", width/2+250, 180)
+    textSize(15)
+    text("1 to 0 -- Colours in the top row\n(Press shift + number to get the colours\n in the bottom row)\n\nR -- Random colour(continuous)\nr -- Random color(fixed)\n\ne -- Eraser\ns -- Save\nc -- Clear\nm -- Go to the next mode\n\n+ -- Increase thickness by 1\n - -- Decrease thickness by 1", width/2+210, 210)
+
+    fill(255)
+    strokeWeight(2)
+    stroke(0)
+    if(mouseX > width/2-100 && mouseX < width/2+100 && mouseY > 615 && mouseY < 695){
+      strokeWeight(4)
+    }
+    rect(width/2-100, 615, 200, 80, 10)
+    textSize(30)
+    fill(0)
+    strokeWeight(0)
+    text("Close", width/2-40, 665)
+  }
 }
 
 function mousePressed(){
+  
+  if(mouseX > width/2-100 && mouseX < width/2+100 && mouseY > 615 && mouseY < 695 && inst == 1){
+    inst = 0
+    fill(bgcolor)
+    rect(0, 100, width, height-100)
+  }
+  //Instructions
+  if(dist(mouseX, mouseY, 1620, 27) < 25 && inst == 0){
+    inst = 1
+  }
+  
   //circle mode
   if(dist(mouseX, mouseY, 1000, 50) < 20){
     mode = 0
