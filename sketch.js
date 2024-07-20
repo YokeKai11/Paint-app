@@ -42,7 +42,7 @@ function setup() {
     thicknessInput.value(thickness);
   });
   
-  textFont("Arial")
+  textFont("Oleo Script")
 }
 
 
