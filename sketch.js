@@ -742,7 +742,7 @@ function draw() {
   }
 }
 
-function mousePressed(){
+function mouseClicked(){
   
   if(mouseX > width/2-100 && mouseX < width/2+100 && mouseY > 615 && mouseY < 695 && inst == 1){
     inst = 0
